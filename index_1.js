@@ -1,21 +1,14 @@
 /**
- * puppeteer 使用本地浏览器执行，并显示交互界面
- * 系统：Mac
- * 链接本地浏览器执行
- * 网上查看有多种方式链接本地浏览器界面执行
- * 下面是找到的答案，允许起来可以达到想要的效果
- * https://stackoverflow.com/questions/47122579/run-puppeteer-on-already-installed-chrome-on-macos
+ * 初次体验 chrome recorder
+ * 无界面执行
+ * tip: node 版本要高点，我使用的node v14版本导致执行不成功,使用nvm 安装 v18版本执行成功
+ * 
  */
+
 const puppeteer = require("puppeteer"); // v20.7.4 or later
+
 (async () => {
-  // const browserURL = 'http://127.0.0.1:9222';
-  // const browser = await puppeteer.connect({browserURL});
-  // const browser = await puppeteer.launch({ headless: "new" });
-  const browser = await puppeteer.launch({
-    headless: false,
-    // executablePath: '/Applications/Google Chrome.app/',
-    // args: ["--window-size=2400,1239"],
-  });
+  const browser = await puppeteer.launch({ headless: "new" });
   const page = await browser.newPage();
   const timeout = 5000;
   page.setDefaultTimeout(timeout);
@@ -150,7 +143,7 @@ const puppeteer = require("puppeteer"); // v20.7.4 or later
     await targetPage.keyboard.up("Enter");
   }
   console.log("run recorder is success .....");
-  // await browser.close();
+  await browser.close();
 })().catch((err) => {
   console.error(err);
   process.exit(1);
