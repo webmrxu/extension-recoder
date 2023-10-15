@@ -124,7 +124,7 @@ const puppeteer = require("puppeteer"); // v20.7.4 or later
       targetPage.locator(":scope >>> #mobileOrMail"),
     ])
       .setTimeout(timeout)
-      .fill("webmrxu@foxmail.com");
+      .fill(account);
   }
 
   {
