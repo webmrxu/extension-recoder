@@ -1,21 +1,15 @@
 /**
- * puppeteer 使用本地浏览器执行，并显示交互界面
- * 系统：Mac
- * 链接本地浏览器执行
- * 网上查看有多种方式链接本地浏览器界面执行
- * 下面是找到的答案，允许起来可以达到想要的效果 
- * https://stackoverflow.com/questions/47122579/run-puppeteer-on-already-installed-chrome-on-macos
+ * segmentfault 思否 自动登陆
+ * headless 无头浏览器和本地的手动打开的浏览器还是有区别的，
+ * 登陆信息，cookie token 等都是没有的，如果需要正常访问需要登陆的网站，这登陆步骤也是个问题
+ * 如果这个步骤选择手工登陆，那不断执行步骤，频繁登陆，账号肯定会被限制
  */
+const account = "accountestt"; // 账号
+const pass = "passTest"; // 密码
 const puppeteer = require("puppeteer"); // v20.7.4 or later
+
 (async () => {
-  // const browserURL = 'http://127.0.0.1:9222';
-  // const browser = await puppeteer.connect({browserURL});
-  // const browser = await puppeteer.launch({ headless: "new" });
-  const browser = await puppeteer.launch({
-    headless: false,
-    // executablePath: '/Applications/Google Chrome.app/',
-    // args: ["--window-size=2400,1239"],
-  });
+  const browser = await puppeteer.launch({ headless: false });
   const page = await browser.newPage();
   const timeout = 5000;
   page.setDefaultTimeout(timeout);
@@ -23,8 +17,8 @@ const puppeteer = require("puppeteer"); // v20.7.4 or later
   {
     const targetPage = page;
     await targetPage.setViewport({
-      width: 723,
-      height: 782,
+      width: 808,
+      height: 673,
     });
   }
   {
@@ -34,7 +28,7 @@ const puppeteer = require("puppeteer"); // v20.7.4 or later
       promises.push(targetPage.waitForNavigation());
     };
     startWaitingForEvents();
-    await targetPage.goto("https://www.v2ex.com/t/981893");
+    await targetPage.goto("https://segmentfault.com/");
     await Promise.all(promises);
   }
   {
@@ -44,44 +38,19 @@ const puppeteer = require("puppeteer"); // v20.7.4 or later
       promises.push(targetPage.waitForNavigation());
     };
     await puppeteer.Locator.race([
+      targetPage.locator('::-p-aria(注册登录[role=\\"link\\"])'),
+      targetPage.locator("div.left-wrap a.btn"),
       targetPage.locator(
-        "::-p-aria(    46 guyoyo   OP    2 小时 49 分钟前 @ian511 感谢您耐心的恢复，从你这儿可以看到需求还是有的，如何嵌入到现有的研发流程，不增加负担，真的能提升效率比较关键) >>>> ::-p-aria(guyoyo)"
+        '::-p-xpath(//*[@id=\\"sf-header\\"]/div/div[2]/div/a[2])'
       ),
-      targetPage.locator("#r_13778069 strong > a"),
-      targetPage.locator(
-        '::-p-xpath(//*[@id=\\"r_13778069\\"]/table/tbody/tr/td[3]/strong/a)'
-      ),
-      targetPage.locator(":scope >>> #r_13778069 strong > a"),
+      targetPage.locator(":scope >>> div.left-wrap a.btn"),
     ])
       .setTimeout(timeout)
       .on("action", () => startWaitingForEvents())
       .click({
         offset: {
-          x: 31,
-          y: 11.0078125,
-        },
-      });
-    await Promise.all(promises);
-  }
-  {
-    const targetPage = page;
-    const promises = [];
-    const startWaitingForEvents = () => {
-      promises.push(targetPage.waitForNavigation());
-    };
-    await puppeteer.Locator.race([
-      targetPage.locator("::-p-aria(guyoyo 创建的更多回复)"),
-      targetPage.locator("div:nth-of-type(22) > a"),
-      targetPage.locator('::-p-xpath(//*[@id=\\"Main\\"]/div[6]/div[22]/a)'),
-      targetPage.locator(":scope >>> div:nth-of-type(22) > a"),
-      targetPage.locator("::-p-text(guyoyo 创建的更多回复)"),
-    ])
-      .setTimeout(timeout)
-      .on("action", () => startWaitingForEvents())
-      .click({
-        offset: {
-          x: 100.765625,
-          y: 3.328125,
+          x: 44,
+          y: 24,
         },
       });
     await Promise.all(promises);
@@ -89,68 +58,117 @@ const puppeteer = require("puppeteer"); // v20.7.4 or later
   {
     const targetPage = page;
     await puppeteer.Locator.race([
-      targetPage.locator("#Main div.cell > div"),
-      targetPage.locator('::-p-xpath(//*[@id=\\"Main\\"]/div[2]/div[33]/div)'),
-      targetPage.locator(":scope >>> #Main div.cell > div"),
-      targetPage.locator("::-p-text(工作靠不住啊)"),
-    ])
-      .setTimeout(timeout)
-      .click({
-        delay: 1148.6000000014901,
-        offset: {
-          x: 6,
-          y: 17.84375,
-        },
-      });
-  }
-  {
-    const targetPage = page;
-    await targetPage.keyboard.down("Meta");
-  }
-  {
-    const targetPage = page;
-    await targetPage.keyboard.down("c");
-  }
-  {
-    const targetPage = page;
-    await targetPage.keyboard.up("Meta");
-  }
-  {
-    const targetPage = page;
-    await puppeteer.Locator.race([
-      targetPage.locator("#search"),
-      targetPage.locator('::-p-xpath(//*[@id=\\"search\\"])'),
-      targetPage.locator(":scope >>> #search"),
+      targetPage.locator("::-p-aria(密码登录)"),
+      targetPage.locator("div.login-3rd button:nth-of-type(3)"),
+      targetPage.locator(
+        '::-p-xpath(//*[@id=\\"loginDiv\\"]/div/div[1]/div/button[3])'
+      ),
+      targetPage.locator(":scope >>> div.login-3rd button:nth-of-type(3)"),
     ])
       .setTimeout(timeout)
       .click({
         offset: {
-          x: 40,
-          y: 11,
+          x: 42,
+          y: 8.703125,
         },
       });
   }
   {
     const targetPage = page;
     await puppeteer.Locator.race([
-      targetPage.locator("#search"),
-      targetPage.locator('::-p-xpath(//*[@id=\\"search\\"])'),
-      targetPage.locator(":scope >>> #search"),
+      targetPage.locator("::-p-aria(手机号或邮箱)"),
+      targetPage.locator("#mobileOrMail"),
+      targetPage.locator('::-p-xpath(//*[@id=\\"mobileOrMail\\"])'),
+      targetPage.locator(":scope >>> #mobileOrMail"),
     ])
       .setTimeout(timeout)
-      .fill("工作靠不住啊");
+      .fill(account);
+  }
+  {
+    const targetPage = page;
+    await puppeteer.Locator.race([
+      targetPage.locator("::-p-aria(密码)"),
+      targetPage.locator("#password"),
+      targetPage.locator('::-p-xpath(//*[@id=\\"password\\"])'),
+      targetPage.locator(":scope >>> #password"),
+    ])
+      .setTimeout(timeout)
+      .fill(pass);
+  }
+  {
+    const targetPage = page;
+    await puppeteer.Locator.race([
+      targetPage.locator("#loginDiv > div"),
+      targetPage.locator('::-p-xpath(//*[@id=\\"loginDiv\\"]/div)'),
+      targetPage.locator(":scope >>> #loginDiv > div"),
+    ])
+      .setTimeout(timeout)
+      .click({
+        delay: 1058.3999999985099,
+        offset: {
+          x: 2,
+          y: 101.4765625,
+        },
+      });
+  }
+  {
+    const targetPage = page;
+    await targetPage.keyboard.up("2");
+  }
+  {
+    const targetPage = page;
+    await puppeteer.Locator.race([
+      targetPage.locator("::-p-aria(手机号或邮箱)"),
+      targetPage.locator("#mobileOrMail"),
+      targetPage.locator('::-p-xpath(//*[@id=\\"mobileOrMail\\"])'),
+      targetPage.locator(":scope >>> #mobileOrMail"),
+    ])
+      .setTimeout(timeout)
+      .fill("webmrxu@foxmail.com");
   }
 
   {
     const targetPage = page;
-    await targetPage.keyboard.down("Enter");
+    await targetPage.keyboard.down("Backspace");
   }
   {
     const targetPage = page;
-    await targetPage.keyboard.up("Enter");
+    await targetPage.keyboard.up("Backspace");
   }
-  console.log("run recorder is success .....");
-  // await browser.close();
+  {
+    const targetPage = page;
+    await targetPage.keyboard.down("Backspace");
+  }
+  {
+    const targetPage = page;
+    await targetPage.keyboard.up("Backspace");
+  }
+  {
+    const targetPage = page;
+    const promises = [];
+    const startWaitingForEvents = () => {
+      promises.push(targetPage.waitForNavigation());
+    };
+    await puppeteer.Locator.race([
+      targetPage.locator("::-p-aria(登录)"),
+      targetPage.locator("form button"),
+      targetPage.locator(
+        '::-p-xpath(//*[@id=\\"loginDiv\\"]/div/form/div[5]/button)'
+      ),
+      targetPage.locator(":scope >>> form button"),
+    ])
+      .setTimeout(timeout)
+      .on("action", () => startWaitingForEvents())
+      .click({
+        offset: {
+          x: 69,
+          y: 21.703125,
+        },
+      });
+    await Promise.all(promises);
+  }
+
+  //  await browser.close();
 })().catch((err) => {
   console.error(err);
   process.exit(1);
