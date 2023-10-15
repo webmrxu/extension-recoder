@@ -3,7 +3,7 @@
  * 系统：Mac
  * 链接本地浏览器执行
  * 网上查看有多种方式链接本地浏览器界面执行
- * 下面是找到的答案，允许起来可以达到想要的效果
+ * 下面是找到的答案，允许起来可以达到想要的效果 
  * https://stackoverflow.com/questions/47122579/run-puppeteer-on-already-installed-chrome-on-macos
  */
 const puppeteer = require("puppeteer"); // v20.7.4 or later
