@@ -1,6 +1,6 @@
 const puppeteer = require("puppeteer"); // v20.7.4 or later
 const event = require("./event.js");
-const { printTime } = require("./utils.js");
+const { printTime, delay } = require("./utils.js");
 
 /**
  * 1、打开网站搜索关键词
@@ -106,12 +106,20 @@ const { printTime } = require("./utils.js");
   {
     const targetPage = page;
     const locators = [
-      targetPage.locator("::-p-xpath(/html/body/section/div/div[6]/div[1]/a)")
-    ]
+      targetPage.locator("::-p-xpath(/html/body/section/div/div[6]/div[1]/a)"),
+    ];
     await event.click(locators);
   }
 
   printTime("11");
+  await delay(2000);
+  
+  {
+    const targetPage = page;
+    await targetPage.goBack();
+  }
+
+  printTime("12");
 
   // await browser.close();
 })().catch((err) => {
