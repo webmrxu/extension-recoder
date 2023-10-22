@@ -7,6 +7,19 @@ const utils = {
 
   delay(seconds) {
     return new Promise((resolve) => setTimeout(resolve, seconds));
+  },
+
+  parseCookieStr(str) {
+    let cookieStr = str;
+    let cookies = cookieStr.split('; ');
+    let result = {};
+    for (let i = 0; i < cookies.length; i++) {
+      let parts = cookies[i].split('=');
+      let name = parts[0];
+      let value = parts[1];
+      result[name] = value;
+    }
+    return result;
   }
 }
 module.exports = utils;

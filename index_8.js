@@ -96,7 +96,8 @@ const { printTime, delay } = require("./utils.js");
       await delay(2000);
       await targetPage.goBack();
       locatorIndex += 1;
-      navItemAndBack(locatorIndex)
+      // 递归加载
+      // navItemAndBack(locatorIndex)
     } catch (err) {
       console.log(err);
     }
