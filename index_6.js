@@ -1,11 +1,12 @@
-const puppeteer = require("puppeteer"); // v20.7.4 or later
-const event = require("./event.js");
-const { printTime, delay } = require("./utils.js");
-
 /**
  * 1、打开网站搜索关键词
  * 2、打开第一个搜索结果
  */
+const puppeteer = require("puppeteer"); // v20.7.4 or later
+const event = require("./event.js");
+const { printTime, delay } = require("./utils.js");
+
+
 (async () => {
   printTime("1");
   const browser = await puppeteer.launch({ headless: false });
