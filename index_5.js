@@ -3,8 +3,7 @@ const event = require('./event.js');
 const { printTime } = require('./utils.js');
 
 /**
- * 1、打开网站搜索关键词
- * 2、循环打开每一个搜索结果
+ * 打开网站搜索关键词
  */
 (async () => {
   printTime('1')
