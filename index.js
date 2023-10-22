@@ -1,19 +1,19 @@
 const puppeteer = require("puppeteer"); // v20.7.4 or later
-const event = require('./event.js');
-const { printTime } = require('./utils.js');
+const event = require("./event.js");
+const { printTime } = require("./utils.js");
 
 /**
  * 1、打开网站搜索关键词
  * 2、循环打开每一个搜索结果
  */
 (async () => {
-  printTime('1')
+  printTime("1");
   const browser = await puppeteer.launch({ headless: false });
   const page = await browser.newPage();
   // 设置网站加载超时时间
   const timeout = 10000;
   page.setDefaultTimeout(timeout);
-  printTime('2')
+  printTime("2");
   {
     const targetPage = page;
     await targetPage.setViewport({
@@ -22,7 +22,7 @@ const { printTime } = require('./utils.js');
     });
   }
   // 打开网站
-  printTime('3')
+  printTime("3");
   {
     const targetPage = page;
     const promises = [];
@@ -33,7 +33,7 @@ const { printTime } = require('./utils.js');
     await targetPage.goto("https://javdb.com");
     await Promise.all(promises);
   }
-  printTime('4')
+  printTime("4");
   {
     const targetPage = page;
     const promises = [];
@@ -57,7 +57,7 @@ const { printTime } = require('./utils.js');
       });
     await Promise.all(promises);
   }
-  printTime('5')
+  printTime("5");
   {
     const targetPage = page;
     const locators = [
@@ -68,7 +68,7 @@ const { printTime } = require('./utils.js');
     ];
     await event.click(locators);
   }
-  printTime('6')
+  printTime("6");
   {
     const targetPage = page;
     await puppeteer.Locator.race([
@@ -80,17 +80,38 @@ const { printTime } = require('./utils.js');
       .setTimeout(timeout)
       .fill("白色");
   }
-  printTime('7')
+  printTime("7");
   {
     const targetPage = page;
     await targetPage.keyboard.down("Enter");
   }
-  printTime('8')
+  printTime("8");
   {
     const targetPage = page;
     await targetPage.keyboard.up("Enter");
   }
-  printTime('9')
+  printTime("9");
+  {
+    const targetPage = page;
+    const locators = [
+      targetPage.locator("aria/按發布日期排序"),
+      targetPage.locator("body > section a:nth-of-type(2)"),
+      targetPage.locator("xpath//html/body/section/div/div[5]/div/div/a[2]"),
+      targetPage.locator("pierce/body > section a:nth-of-type(2)"),
+    ];
+    await event.click(locators);
+  }
+  printTime("10");
+
+  {
+    const targetPage = page;
+    const locators = [
+      targetPage.locator("::-p-xpath(/html/body/section/div/div[6]/div[1]/a)")
+    ]
+    await event.click(locators);
+  }
+
+  printTime("11");
 
   // await browser.close();
 })().catch((err) => {
