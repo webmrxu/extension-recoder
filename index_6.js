@@ -4,7 +4,7 @@ const { printTime, delay } = require("./utils.js");
 
 /**
  * 1、打开网站搜索关键词
- * 2、循环打开每一个搜索结果
+ * 2、打开第一个搜索结果
  */
 (async () => {
   printTime("1");
@@ -103,23 +103,21 @@ const { printTime, delay } = require("./utils.js");
   }
   printTime("10");
 
-  async function navItemAndBack(locatorIndex = 1) {
+  {
     const targetPage = page;
-    try {
-      const locatorDom = await targetPage.locator(`::-p-xpath(/html/body/section/div/div[6]/div[${locatorIndex}]/a)`);
-      await event.click([locatorDom]);
-      await targetPage.waitForNavigation();
-      printTime(`${locatorIndex}页加载成功`)
-      await delay(2000);
-      await targetPage.goBack();
-      locatorIndex += 1;
-      navItemAndBack(locatorIndex)
-    } catch (err) {
-      console.log(err);
-    }
+    const locators = [
+      targetPage.locator("::-p-xpath(/html/body/section/div/div[6]/div[1]/a)"),
+    ];
+    await event.click(locators);
   }
 
-  navItemAndBack(1)
+  printTime("11");
+  await delay(2000);
+  
+  {
+    const targetPage = page;
+    await targetPage.goBack();
+  }
 
   printTime("12");
 
@@ -128,5 +126,3 @@ const { printTime, delay } = require("./utils.js");
   console.error(err);
   process.exit(1);
 });
-
-
