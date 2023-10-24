@@ -1,7 +1,6 @@
 /**
- * 115 cookie/token login
+ * 微博 cookie/token login
  * 
- * cookie 解释 https://developer.mozilla.org/en-US/docs/Mozilla/Add-ons/WebExtensions/API/cookies/Cookie
  */
 
  const puppeteer = require("puppeteer"); // v20.7.4 or later
