@@ -5,7 +5,6 @@
 
 const axios = require('axios');
 const fs = require('fs');
-const filePath = 'all.txt';
 /**
  * 获取所有沪深股票分页数据
  * 总55页 每页 90 条
