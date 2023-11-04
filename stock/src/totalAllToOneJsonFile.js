@@ -1,14 +1,13 @@
 /**
  * 对 data/allClass 所有股票汇总
  */
-const { error } = require('console');
 const fs = require('fs');
 const path = require('path');
 
 let result = []
 let allPromise = []
 // 定义要读取的文件夹路径
-const folderPath = __dirname + '/data/allClass';
+const folderPath = path.join(__dirname + '/../data/allClass') ;
 function readFilesRecursively(folderPath) {
   // 读取文件夹内的所有文件和子文件夹
   const items = fs.readdirSync(folderPath);
@@ -44,7 +43,7 @@ Promise.all(allPromise).then(datas => {
     }
   })
   // console.log(result[0]) ;
-  let filePath = 'allClass.json';
+  let filePath = path.join(__dirname + '/../data/allClass.json');
   let jsonStr = JSON.stringify(result,null,2)
   fs.writeFile(filePath, jsonStr, (err) => {
     if (err) {
