@@ -16,34 +16,10 @@ function readFilesRecursively(folderPath) {
     if (!item.includes('.json')) {
       return;
     }
-
     const filePath = path.join(folderPath, item);
     // 检查是否是文件
     if (fs.statSync(filePath).isFile()) {
       allPromise.push(fs.promises.readFile(filePath, 'utf8'))
-      // 在这里你可以对文件执行操作
-      // 使用fs.readFile()来读取文件内容
-      // fs.readFile(itemPath, 'utf8', (err, data) => {
-      //   if (err) {
-      //     console.error('读取文件时出错：', itemPath, err);
-      //   } else {
-      //     try {
-      //       let fileData = JSON.parse(data) || [];
-      //       if (itemPath.includes('allPage1.json')) {
-      //         console.log(fileData);
-      //       }
-      //       if (fileData.length) {
-      //         fileData.forEach(row => {
-      //           let { name, symbol } = row;
-      //           let item = [ symbol, name];
-      //           result.push(item);
-      //         })
-      //       }
-      //     } catch (err) {
-      //       console.error('json解析失败：', itemPath, err);
-      //     }
-      //   }
-      // });
     } else {
       // 如果是子文件夹，递归调用函数
       readFilesRecursively(itemPath);
