@@ -6,19 +6,18 @@
 
 const puppeteer = require("puppeteer"); // v20.7.4 or later
 const event = require("./event.js");
-const { printTime, delay } = require("./utils.js");
+const { printTime, delay, parseCookieStr } = require("./utils.js");
 
- 
 (async () => {
   printTime("1");
   const browser = await puppeteer.launch({ headless: false });
   const page = await browser.newPage();
   // 设置网站加载超时时间
-  const timeout = 10000;
+  const timeout = 100000;
   page.setDefaultTimeout(timeout);
 
-  const jsonStr = `{"list_mode":"hh","theme":"auto","_rucaptcha_session_id":"773b0c25373a1d444d4c878ab11952f7","_ym_uid":"1656733079441700698","_ym_d":"1697958841","_ym_isad":"1","over18":"1","locale":"zh","redirect_to":"%2Fv%2FXGD5e","remember_me_token":"eyJfcmFpbHMiOnsibWVzc2FnZSI6IklrSkJObEZhT0ZWS1ZITnRSM2xxWkhVelNHUm1JZz09IiwiZXhwIjoiMjAyMy0xMC0yOVQwNzoyNzoyOC4wMDBaIiwicHVyIjoiY29va2llLnJlbWVtYmVyX21lX3Rva2VuIn19--18355bf6f7bfffe3f925f0141bf18aa7230702ba","cf_clearance":"kB2F7bB1Hv3JmhQ_vi2BS8zMy9KnPy2By1TY9A0Jpjc-1697959719-0-1-c55d4c1c.2895dac2.925c13fc-0.2.1697959719","_jdb_session":"CBTTQVv4yS%2BgctsFbSTudkKArR39hZMri2I58dYohqKOyFpisONYBY91m0UvqaM2NqqU%2Fa4jtldMQmT8cuIB4WNHgyPIGeqJTlciLD%2FRinuLKWnJIGc8na%2BpVbA1T2JBwS0hC%2BwBpn%2F7gPcn6Em4tZsqKTQhyOD604pCSxuqBx3jXd3U6R%2BnaE8QZ6cWoaq%2BBaG90Ud578jFao31Go2mJNRV%2BAvElzRYUA6PaPaaNIuNvKE0qKdkjKF0Kal47Phs2VAwvUHgujmlccp2mBUNxfFdJF7Pm4HgZE2Gm0CBdFt4n05RCu10Q%2BUrNZHyPnJBCI%2Bn3XbTY3R98Ru3wQZX7M%2BSTWtttdqJfUFAteP7Ai2dIb%2B0pipPJCYCoqaxBhSENw4%3D--KkK3dv6aSoUlvu3o--9R4E5g9%2B7tbBH3YMd83S7A%3D%3D"}`;
-  const jsonObj = JSON.parse(jsonStr);
+  const cookieStr = `list_mode=h; theme=auto; locale=en; _ym_uid=1699162763613650171; _ym_d=1699162763; cf_clearance=8G..uOYL4dk1C5qSZMmIhJ4yg2wOKuyi66jxHHRbFeU-1699162762-0-1-d3719256.b6827dd6.8470cdb6-0.2.1699162762; _ym_isad=2; over18=1; _rucaptcha_session_id=10ffceceff2950ed3566d7d4c5024b89; remember_me_token=eyJfcmFpbHMiOnsibWVzc2FnZSI6IklsSTBlbmxMV0ZoTFExaGFUWFpFTkhnMmQybHZJZz09IiwiZXhwIjoiMjAyMy0xMS0xMlQwNTo0MzoxNC4wMDBaIiwicHVyIjoiY29va2llLnJlbWVtYmVyX21lX3Rva2VuIn19--745c4611f8da3ff89645722753dbe3a6da3fd754; _jdb_session=KPkaIHLwGCeaUlx%2BwwiT8gxBBlzolNlVK%2BCBFxbY2Fb4WKB5x9Cob5JxhruK%2BCVfaMrXuYZpH9ipO5RJ9HPIifNGaBHxVsrq7NJuIaZ4SpZlTGpXMdZkDfImQVh8btZXjKHb3C9bSXmWRMtL0Hg1n8yvTQwFhr3DADoF1rWt8U7u9qmwkiw%2Bo9FDSrikW1h0RyziBPX%2FWCxqKk8VIjf%2FZx0if2OdMyOsKmmfeEdDLt%2BIq9nv9yqeghorgvIHOkuWUmlKRwsUDqnWRv%2F3q4AjGVyc6Yl%2B%2B4%2FFeCOF6lOyxdhLkw7l1lOOG5lc%2B5EvbZpLVt0fkTY5vi2GgYEt4yZ2fOi0MwDoKezJIrWLc9%2BaviK2G1io4TZx3FzKs6G8TIsDUJI%3D--f4usrmS3GaFy2B%2Bl--QWgr6UBqAE0qRwls%2BPMaPg%3D%3D`
+  const jsonObj = parseCookieStr(cookieStr);
   let listCookie = [];
   Object.keys(jsonObj).forEach((key) => {
     let item = {
