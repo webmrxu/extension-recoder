@@ -19,7 +19,7 @@ async function getOneStock(index) {
       console.log(index, ...stock, '已经存储');
       setTimeout(() => {
         // 递归获取下一股票
-        getOneStock(index+1);
+        getOneStock(index + 1);
       }, 50);
       return;
     }
@@ -27,12 +27,12 @@ async function getOneStock(index) {
       let res = await getDaySecondLineData(symbol);
       const { data: { data } } = res;
       fs.mkdirSync(directoryPath, { recursive: true });
-      let jsonStr = JSON.stringify(data);
+      let jsonStr = JSON.stringify(data, null, 2);
       await fs.promises.writeFile(filePath, jsonStr);
-      console.log(index+' ', ...stock, 'api数据获取成功');
+      console.log(index + ' ', ...stock, 'api数据获取成功');
       setTimeout(() => {
         // 递归获取下一股票
-        getOneStock(index+1);
+        getOneStock(index + 1);
       }, 1000);
     } catch (err) {
       console.log('获取分时数据异常', err);
@@ -46,4 +46,4 @@ async function getOneStock(index) {
     return;
   }
 }
-getOneStock(4940)
+getOneStock(0)
