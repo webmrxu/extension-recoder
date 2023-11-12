@@ -20,8 +20,13 @@ const http = axios.create({
 });
 
 // 获取单日分时k线数据
+// function getDaySecondLineData1(symbol = 'SZ301555') {
+//   let url = `/v5/stock/chart/minute.json?symbol=${symbol}&period=1d`;
+//   return http.get(url)
+// }
 function getDaySecondLineData(symbol = 'SZ301555') {
-  let url = `/v5/stock/chart/minute.json?symbol=${symbol}&period=1d`;
+  let url = `/v5/stock/chart/kline.json?symbol=${symbol}&begin=1699533936718&period=1m&type=before&count=-284&indicator=kline,pe,pb,ps,pcf,market_capital,agt,ggt,balance`
   return http.get(url)
 }
+
 module.exports.getDaySecondLineData = getDaySecondLineData;

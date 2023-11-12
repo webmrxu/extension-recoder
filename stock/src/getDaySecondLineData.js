@@ -33,7 +33,7 @@ async function getOneStock(index) {
       setTimeout(() => {
         // 递归获取下一股票
         getOneStock(index + 1);
-      }, 1000);
+      }, 500);
     } catch (err) {
       console.log('获取分时数据异常', err);
     }
